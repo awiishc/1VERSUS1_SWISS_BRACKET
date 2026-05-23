@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>1VERSUS1 Swiss Bracket</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000;font-family:Arial,Helvetica,sans-serif;color:#fff}
+    body{display:grid;place-items:center}
+    .phone{
+      position:relative;width:100vw;height:100svh;max-width:520px;max-height:calc(520px * 16 / 9);
+      overflow:hidden;background:#000;isolation:isolate;box-shadow:0 0 45px rgba(180,0,0,.28)
+    }
+    .phone:before{content:"";position:absolute;inset:0;z-index:-3;background:
+      radial-gradient(circle at 50% 43%, rgba(165,0,0,.85) 0%, rgba(75,0,0,.58) 23%, rgba(0,0,0,.94) 50%, #000 100%)}
+    .phone:after{content:"";position:absolute;inset:0;z-index:-2;opacity:.27;background-image:
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:26px 26px;mix-blend-mode:screen;pointer-events:none}
+    .top{height:29%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:7.8svh;background:linear-gradient(#000 0%,#000 78%,rgba(0,0,0,.72) 100%)}
+    .mini-logo{width:29%;max-width:140px;height:auto;filter:drop-shadow(0 0 8px rgba(255,255,255,.18));object-fit:contain}
+    .main-logo{width:42%;max-width:220px;height:auto;margin-top:3.2svh;filter:drop-shadow(0 7px 0 rgba(0,0,0,.85)) drop-shadow(0 0 12px rgba(255,0,0,.15));object-fit:contain}
+    .arena{height:32.5%;position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8%;padding:0 16%;background:
+      linear-gradient(90deg,#020202 0%,rgba(0,0,0,.54) 18%,rgba(115,0,0,.82) 50%,rgba(0,0,0,.54) 82%,#020202 100%)}
+    .arena:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 48%, rgba(255,43,43,.22), transparent 45%);pointer-events:none}
+    .card-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.3svh;z-index:1}
+    .card{width:28vw;max-width:138px;aspect-ratio:1447/2048;position:relative;transform-style:preserve-3d;filter:drop-shadow(0 12px 14px rgba(0,0,0,.65));}
+    .card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;backface-visibility:hidden;border:1px solid rgba(255,255,255,.05)}
+    .spin{animation:spinReveal 1.7s cubic-bezier(.03,.86,.18,1) both}
+    @keyframes spinReveal{0%{transform:rotateY(0deg) scale(1)}18%{transform:rotateY(900deg) scale(1.04)}48%{transform:rotateY(1500deg) scale(1.045)}78%{transform:rotateY(1775deg) scale(1.015)}100%{transform:rotateY(1800deg) scale(1)}}
+    .versus{font-family:Georgia,serif;font-size:clamp(25px,6vw,38px);font-weight:700;text-shadow:0 0 12px rgba(255,255,255,.18);z-index:2;margin-top:-3svh}
+    .tap-btn{border:1px solid rgba(255,255,255,.7);background:rgba(0,0,0,.58);color:#fff;border-radius:999px;font-size:clamp(10px,2.6vw,13px);font-weight:900;letter-spacing:.08em;padding:.75em 1.45em;min-width:96px;box-shadow:0 0 18px rgba(255,0,0,.25), inset 0 0 15px rgba(255,255,255,.06);cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s}
+    .tap-btn:active{transform:scale(.94);box-shadow:0 0 28px rgba(255,0,0,.55);background:rgba(120,0,0,.65)}
+    .bracket-section{height:30.5%;display:flex;align-items:center;justify-content:center;padding:4.2svh 4.5vw 3.2svh;background:#000;position:relative}
+    .view-button{width:min(92vw,470px);aspect-ratio:1920/1080;border:3px solid rgba(255,255,255,.65);padding:0;background:#111;cursor:pointer;overflow:hidden;box-shadow:0 0 32px rgba(180,0,0,.28);position:relative}
+    .view-button img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78)}
+    .view-button:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.13) 48%,transparent 58%);transform:translateX(-120%);animation:shine 3s infinite}
+    @keyframes shine{0%,52%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+    .footer{height:8%;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 7vw;font-size:clamp(6px,1.55vw,9px);font-weight:800;font-style:italic;color:#fff;background:#000;letter-spacing:.02em}.footer span:nth-child(2){text-align:center;font-style:normal}.footer span:nth-child(3){text-align:right}.red{color:#e01218}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.96);display:none;place-items:center;z-index:50;overflow:hidden}.modal.open{display:grid}.modal img{position:absolute;width:100svh;height:100vw;max-width:none;max-height:none;object-fit:contain;transform:rotate(90deg);filter:drop-shadow(0 0 22px rgba(255,0,0,.25))}.close{position:absolute;right:16px;top:16px;z-index:55;border:1px solid rgba(255,255,255,.65);background:rgba(0,0,0,.62);color:#fff;border-radius:999px;width:42px;height:42px;font-size:26px;line-height:1;cursor:pointer}.hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:55;font-size:11px;letter-spacing:.16em;font-weight:900;color:rgba(255,255,255,.68)}
+    .pulse{animation:pulseRed 1.35s ease-out}@keyframes pulseRed{0%{box-shadow:0 0 0 0 rgba(255,0,0,.55)}100%{box-shadow:0 0 0 22px rgba(255,0,0,0)}}
+    @media (max-height:690px){.top{height:27%;padding-top:5.8svh}.main-logo{margin-top:2svh;width:37%}.arena{height:34%;padding:0 17%;gap:7%}.bracket-section{height:31%;padding-top:2svh}.footer{height:8%}.card{width:25vw}.tap-btn{padding:.6em 1.2em;min-width:88px}}
+    @media (min-width:521px){.card{width:132px}.arena{padding-left:82px;padding-right:82px}.footer{padding-left:34px;padding-right:34px}}
+  </style>
+</head>
+<body>
+  <main class="phone">
+    <section class="top">
+      <img class="mini-logo" src="assets/swiss-bracket-logo.png" alt="Swiss Bracket Logo" />
+      <img class="main-logo" src="assets/swiss-bracket-logo.png" alt="Swiss Bracket Logo" />
+    </section>
+
+    <section class="arena">
+      <div class="card-wrap">
+        <div class="card" id="leftCard"><img src="assets/player-card-back.jpg" alt="Left Player Card"></div>
+        <button class="tap-btn" id="leftBtn">TAP HERE</button>
+      </div>
+      <div class="versus">VS</div>
+      <div class="card-wrap">
+        <div class="card" id="rightCard"><img src="assets/player-card-back.jpg" alt="Right Player Card"></div>
+        <button class="tap-btn" id="rightBtn">TAP HERE</button>
+      </div>
+    </section>
+
+    <section class="bracket-section">
+      <button class="view-button" id="openBracket" aria-label="Tap to view Swiss bracket">
+        <img src="assets/tap-to-view.jpg" alt="Tap to view bracket" />
+      </button>
+    </section>
+
+    <footer class="footer">
+      <span>ALL RIGHT RESERVED</span>
+      <span>ONLY <b class="red">ONE</b> STAY. LET THE COURT BE THE JUDGE.</span>
+      <span>© [2026] [1VERSUS1]</span>
+    </footer>
+  </main>
+
+  <div class="modal" id="bracketModal" aria-hidden="true">
+    <button class="close" id="closeBracket" aria-label="Close bracket">×</button>
+    <img src="assets/swiss-bracket.jpg" alt="Swiss Bracket" />
+    <div class="hint">TAP × TO CLOSE</div>
+  </div>
+
+<script>
+  const back = 'assets/player-card-back.jpg';
+  const leftList = [
+    'assets/Player-Card-0218.jpg', // AFFIQ
+    'assets/Player-Card-0221.jpg', // MIR
+    'assets/Player-Card-0216.jpg', // ADAM
+    'assets/Player-Card-0217.jpg'  // HARIZ
+  ];
+  const rightList = [
+    'assets/Player-Card-0220.jpg', // LUQMAN
+    'assets/Player-Card-0219.jpg', // IRHAM
+    'assets/Player-Card-0222.jpg', // SHAFIK
+    'assets/Player-Card-0223.jpg'  // NAME
+  ];
+
+  function setupCard(cardId, btnId, list){
+    const card = document.getElementById(cardId);
+    const btn = document.getElementById(btnId);
+    const img = card.querySelector('img');
+    let index = 0;
+    let busy = false;
+    btn.addEventListener('click', () => {
+      if (busy) return;
+      busy = true;
+      btn.classList.remove('pulse'); void btn.offsetWidth; btn.classList.add('pulse');
+      card.classList.remove('spin'); void card.offsetWidth; card.classList.add('spin');
+      const nextSrc = index < list.length ? list[index] : back;
+      setTimeout(() => { img.src = nextSrc; }, 640);
+      setTimeout(() => {
+        card.classList.remove('spin');
+        index = index < list.length ? index + 1 : 0;
+        busy = false;
+      }, 1720);
+    });
+  }
+  setupCard('leftCard','leftBtn',leftList);
+  setupCard('rightCard','rightBtn',rightList);
+
+  const modal = document.getElementById('bracketModal');
+  document.getElementById('openBracket').addEventListener('click', () => { modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); });
+  document.getElementById('closeBracket').addEventListener('click', () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); });
+  modal.addEventListener('click', (e) => { if(e.target === modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); } });
+</script>
+</body>
+</html>
