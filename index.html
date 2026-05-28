@@ -549,6 +549,85 @@ body {
   }
 }
 
+
+/* =========================================================
+   SMOOTHER CARD SPIN PATCH
+   Uses transform-only animation for better iOS/Safari performance.
+   ========================================================= */
+
+.card {
+  filter: none !important;
+  transform: translate3d(0,0,0) rotateY(0deg);
+  -webkit-transform: translate3d(0,0,0) rotateY(0deg);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -6%;
+  height: 10%;
+  border-radius: 50%;
+  background: rgba(0,0,0,.58);
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.card img {
+  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
+}
+
+.card.spin {
+  animation: cardSpinSmooth 2.45s cubic-bezier(.22,.72,.18,1) both !important;
+  -webkit-animation: cardSpinSmooth 2.45s cubic-bezier(.22,.72,.18,1) both !important;
+}
+
+@keyframes cardSpinSmooth {
+  0% {
+    transform: translate3d(0,0,0) rotateY(0deg) scale(1);
+  }
+  18% {
+    transform: translate3d(0,0,0) rotateY(180deg) scale(1.018);
+  }
+  42% {
+    transform: translate3d(0,0,0) rotateY(420deg) scale(1.026);
+  }
+  68% {
+    transform: translate3d(0,0,0) rotateY(630deg) scale(1.015);
+  }
+  100% {
+    transform: translate3d(0,0,0) rotateY(720deg) scale(1);
+  }
+}
+
+@-webkit-keyframes cardSpinSmooth {
+  0% {
+    -webkit-transform: translate3d(0,0,0) rotateY(0deg) scale(1);
+  }
+  18% {
+    -webkit-transform: translate3d(0,0,0) rotateY(180deg) scale(1.018);
+  }
+  42% {
+    -webkit-transform: translate3d(0,0,0) rotateY(420deg) scale(1.026);
+  }
+  68% {
+    -webkit-transform: translate3d(0,0,0) rotateY(630deg) scale(1.015);
+  }
+  100% {
+    -webkit-transform: translate3d(0,0,0) rotateY(720deg) scale(1);
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .card.spin {
+    animation: cardSpinSmooth 2.3s cubic-bezier(.22,.72,.18,1) both !important;
+    -webkit-animation: cardSpinSmooth 2.3s cubic-bezier(.22,.72,.18,1) both !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -634,9 +713,11 @@ body {
       void card.offsetHeight;
 
       requestAnimationFrame(() => {
-        card.style.webkitAnimation = '';
-        card.style.animation = '';
-        card.classList.add('spin');
+        requestAnimationFrame(() => {
+          card.style.webkitAnimation = '';
+          card.style.animation = '';
+          card.classList.add('spin');
+        });
       });
     }
 
@@ -668,14 +749,14 @@ body {
       timers.push(setTimeout(() => {
         leftImg.src = nextLeft;
         rightImg.src = nextRight;
-      }, 1550));
+      }, 1150));
 
-      timers.push(setTimeout(finishSpin, 3220));
+      timers.push(setTimeout(finishSpin, 2480));
     });
 
     ['animationend', 'webkitAnimationEnd'].forEach(eventName => {
-      rightCard.addEventListener(eventName, () => {
-        if (busy) {
+      rightCard.addEventListener(eventName, (event) => {
+        if (busy && event.animationName && event.animationName.includes('cardSpin')) {
           clearSpinTimers();
           finishSpin();
         }
