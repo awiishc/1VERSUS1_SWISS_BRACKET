@@ -268,7 +268,288 @@
       .cards-row { column-gap:38px; }
       .arena { padding-left:56px; padding-right:56px; }
     }
-  </style>
+  
+/* =========================================================
+   FINAL CLEAN RESPONSIVE + iOS CARD SPIN FIX
+   ========================================================= */
+
+:root {
+  --page-max-w: 560px;
+}
+
+html,
+body {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(160, 18, 20, .14), transparent 30%),
+    linear-gradient(180deg, #020202 0%, #000 100%) !important;
+}
+
+body {
+  display: grid !important;
+  place-items: center !important;
+  padding: max(0px, env(safe-area-inset-top)) max(0px, env(safe-area-inset-right)) max(0px, env(safe-area-inset-bottom)) max(0px, env(safe-area-inset-left)) !important;
+}
+
+.phone {
+  width: min(100vw, var(--page-max-w)) !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 46px rgba(0,0,0,.72) !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.top {
+  height: 24.6% !important;
+  padding-top: .15svh !important;
+}
+
+.top-brand {
+  width: min(50vw, 285px) !important;
+  transform: translateY(-2.85svh) translateZ(0) !important;
+  -webkit-transform: translateY(-2.85svh) translateZ(0) !important;
+}
+
+.arena {
+  height: 32.8% !important;
+  padding: 2.1svh min(9.2vw, 52px) 2.05svh !important;
+}
+
+.cards-row {
+  column-gap: min(7vw, 38px) !important;
+  margin-top: .95svh !important;
+  perspective: 900px;
+  -webkit-perspective: 900px;
+}
+
+.card-shell {
+  perspective: 900px;
+  -webkit-perspective: 900px;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.card {
+  width: min(28vw, 150px) !important;
+  transform: translateZ(0) rotateY(0deg);
+  -webkit-transform: translateZ(0) rotateY(0deg);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout paint;
+  filter: drop-shadow(0 12px 13px rgba(0,0,0,.62)) !important;
+}
+
+.card img {
+  display: block;
+  transform: translateZ(0.1px);
+  -webkit-transform: translateZ(0.1px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: auto;
+}
+
+.card.spin {
+  animation: cardSpinFixed 3.25s cubic-bezier(.14,.76,.20,1) both !important;
+  -webkit-animation: cardSpinFixed 3.25s cubic-bezier(.14,.76,.20,1) both !important;
+}
+
+@keyframes cardSpinFixed {
+  0% {
+    transform: translateZ(0) rotateY(0deg) scale(1);
+    filter: drop-shadow(0 12px 13px rgba(0,0,0,.62));
+  }
+  18% {
+    transform: translateZ(0) rotateY(300deg) scale(1.025);
+    filter: drop-shadow(0 18px 18px rgba(0,0,0,.70));
+  }
+  42% {
+    transform: translateZ(0) rotateY(720deg) scale(1.035);
+    filter: drop-shadow(0 20px 20px rgba(0,0,0,.72));
+  }
+  68% {
+    transform: translateZ(0) rotateY(1020deg) scale(1.018);
+    filter: drop-shadow(0 16px 17px rgba(0,0,0,.68));
+  }
+  100% {
+    transform: translateZ(0) rotateY(1080deg) scale(1);
+    filter: drop-shadow(0 12px 13px rgba(0,0,0,.62));
+  }
+}
+
+@-webkit-keyframes cardSpinFixed {
+  0% {
+    -webkit-transform: translateZ(0) rotateY(0deg) scale(1);
+    filter: drop-shadow(0 12px 13px rgba(0,0,0,.62));
+  }
+  18% {
+    -webkit-transform: translateZ(0) rotateY(300deg) scale(1.025);
+    filter: drop-shadow(0 18px 18px rgba(0,0,0,.70));
+  }
+  42% {
+    -webkit-transform: translateZ(0) rotateY(720deg) scale(1.035);
+    filter: drop-shadow(0 20px 20px rgba(0,0,0,.72));
+  }
+  68% {
+    -webkit-transform: translateZ(0) rotateY(1020deg) scale(1.018);
+    filter: drop-shadow(0 16px 17px rgba(0,0,0,.68));
+  }
+  100% {
+    -webkit-transform: translateZ(0) rotateY(1080deg) scale(1);
+    filter: drop-shadow(0 12px 13px rgba(0,0,0,.62));
+  }
+}
+
+.versus {
+  font-size: clamp(17px, 4.2vw, 25px) !important;
+  transform: translateZ(0);
+}
+
+.tap-trigger {
+  margin-top: 1.65svh !important;
+  padding: .55em .85em !important;
+}
+
+.bracket-section {
+  height: 33.2% !important;
+  padding: 2.2svh min(4.8vw, 28px) 2.45svh !important;
+}
+
+.view-button {
+  width: min(90vw, 485px) !important;
+  border: 1px solid rgba(255,255,255,.58) !important;
+  border-radius: 3px;
+  box-shadow:
+    0 0 22px rgba(130,0,0,.16),
+    0 16px 24px rgba(0,0,0,.34) !important;
+}
+
+.footer {
+  height: 9.4% !important;
+  padding: 0 min(6.2vw, 36px) !important;
+  gap: 8px;
+  font-size: clamp(5.8px, 1.38vw, 8.5px) !important;
+  line-height: 1.25;
+}
+
+.modal img {
+  transform: rotate(90deg) translateZ(0) !important;
+  -webkit-transform: rotate(90deg) translateZ(0) !important;
+}
+
+.close {
+  top: max(14px, env(safe-area-inset-top)) !important;
+  right: max(14px, env(safe-area-inset-right)) !important;
+}
+
+@media (min-width: 620px) {
+  body {
+    padding: 14px !important;
+  }
+
+  .phone {
+    height: min(100dvh - 28px, 980px) !important;
+    border-radius: 22px !important;
+    border: 1px solid rgba(255,255,255,.08);
+    overflow: hidden;
+  }
+
+  .top-brand {
+    width: min(42vw, 292px) !important;
+  }
+
+  .card {
+    width: min(24vw, 152px) !important;
+  }
+
+  .footer {
+    font-size: 8px !important;
+  }
+}
+
+@media (max-height: 700px) {
+  .top {
+    height: 23.8% !important;
+  }
+
+  .arena {
+    height: 33.4% !important;
+    padding-top: 1.8svh !important;
+    padding-bottom: 1.8svh !important;
+  }
+
+  .card {
+    width: min(25.5vw, 135px) !important;
+  }
+
+  .tap-trigger {
+    margin-top: 1.1svh !important;
+  }
+
+  .bracket-section {
+    height: 33.5% !important;
+    padding-top: 1.8svh !important;
+  }
+
+  .footer {
+    height: 9.3% !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .top-brand {
+    width: min(49vw, 260px) !important;
+  }
+
+  .arena {
+    padding-left: 7.5vw !important;
+    padding-right: 7.5vw !important;
+  }
+
+  .cards-row {
+    column-gap: 5.2vw !important;
+  }
+
+  .card {
+    width: min(27.2vw, 128px) !important;
+  }
+
+  .footer {
+    padding-left: 4.8vw !important;
+    padding-right: 4.8vw !important;
+    font-size: clamp(5.4px, 1.48vw, 7px) !important;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .phone {
+    height: 100svh !important;
+  }
+
+  .card.spin {
+    animation-duration: 3.1s !important;
+    -webkit-animation-duration: 3.1s !important;
+  }
+
+  .card img {
+    -webkit-transform: translateZ(0.1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card.spin {
+    animation: cardSpinFixed 1.1s ease-out both !important;
+    -webkit-animation: cardSpinFixed 1.1s ease-out both !important;
+  }
+
+  .view-button::after {
+    animation: none !important;
+  }
+}
+
+</style>
 </head>
 <body>
   <main class="phone">
@@ -329,54 +610,101 @@
     const rightImg = rightCard.querySelector('img');
     const spinBtn = document.getElementById('spinBtn');
 
+    const preloadSources = [back, ...leftList, ...rightList];
+    preloadSources.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
     let pairIndex = 0;
     let busy = false;
+    let timers = [];
+
+    function clearSpinTimers() {
+      timers.forEach(timer => clearTimeout(timer));
+      timers = [];
+    }
+
+    function restartSpin(card) {
+      card.classList.remove('spin');
+      card.style.webkitAnimation = 'none';
+      card.style.animation = 'none';
+
+      // Force Safari/iOS to fully flush the previous animation state.
+      void card.offsetHeight;
+
+      requestAnimationFrame(() => {
+        card.style.webkitAnimation = '';
+        card.style.animation = '';
+        card.classList.add('spin');
+      });
+    }
+
+    function finishSpin() {
+      leftCard.classList.remove('spin');
+      rightCard.classList.remove('spin');
+      leftCard.style.webkitAnimation = '';
+      rightCard.style.webkitAnimation = '';
+      leftCard.style.animation = '';
+      rightCard.style.animation = '';
+      pairIndex = pairIndex < leftList.length ? pairIndex + 1 : 0;
+      busy = false;
+      spinBtn.disabled = false;
+    }
 
     spinBtn.addEventListener('click', () => {
       if (busy) return;
+
       busy = true;
+      spinBtn.disabled = true;
+      clearSpinTimers();
 
       const nextLeft = pairIndex < leftList.length ? leftList[pairIndex] : back;
       const nextRight = pairIndex < rightList.length ? rightList[pairIndex] : back;
 
-      leftCard.classList.remove('spin');
-      rightCard.classList.remove('spin');
-      void leftCard.offsetWidth;
-      leftCard.classList.add('spin');
-      rightCard.classList.add('spin');
+      restartSpin(leftCard);
+      restartSpin(rightCard);
 
-      setTimeout(() => {
+      timers.push(setTimeout(() => {
         leftImg.src = nextLeft;
         rightImg.src = nextRight;
-      }, 2500);
+      }, 1550));
 
-      setTimeout(() => {
-        leftCard.classList.remove('spin');
-        rightCard.classList.remove('spin');
-        pairIndex = pairIndex < leftList.length ? pairIndex + 1 : 0;
-        busy = false;
-      }, 4020);
+      timers.push(setTimeout(finishSpin, 3220));
+    });
+
+    ['animationend', 'webkitAnimationEnd'].forEach(eventName => {
+      rightCard.addEventListener(eventName, () => {
+        if (busy) {
+          clearSpinTimers();
+          finishSpin();
+        }
+      });
     });
 
     const modal = document.getElementById('bracketModal');
     const openBracket = document.getElementById('openBracket');
     const closeBracket = document.getElementById('closeBracket');
 
-    openBracket.addEventListener('click', () => {
+    function openModal() {
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
-    });
+    }
 
-    closeBracket.addEventListener('click', () => {
+    function closeModal() {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
-    });
+    }
+
+    openBracket.addEventListener('click', openModal);
+    closeBracket.addEventListener('click', closeModal);
 
     modal.addEventListener('click', (event) => {
-      if (event.target === modal) {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-      }
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeModal();
     });
   </script>
 </body>
